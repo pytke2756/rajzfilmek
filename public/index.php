@@ -23,6 +23,7 @@ $dbManager->addConnection([
 ]);
 
 $dbManager->setAsGlobal();
+$dbManager->bootEloquent();
 
 $routes=require '../src/routes.php';
 $routes($app);
