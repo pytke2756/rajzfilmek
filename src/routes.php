@@ -74,4 +74,28 @@ return function(Slim\App $app){
             ->withHeader('Content-type','application/json')
             ->withStatus(200);
     });
+
+    $app->get('/rajzfilmek/{id}', function(Request $request,Response $response, array $args){
+        if (!is_numeric($args['id']) || $args['id'] <= 0) {
+            $ki = json_encode(['error ' => 'Az ID pozitív egész szám kell legyen!']);
+            $response->getBody()->write($ki);
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
+        }
+        $rajzfilm = Rajzfilm::find($args['id']);
+        if ($rajzfilm === null) {
+            $ki = json_encode(['error' => 'Nincs ilyen ID-val rajzfilm']);
+            $response->getBody()->write($ki);
+            return $response
+                ->withHeader('Content-type','application/json')
+                ->withStatus(404);
+        }
+        $kimenet= $rajzfilm->toJson();
+        
+        $response->getBody()->write($kimenet);
+        return $response
+            ->withHeader('Content-type','application/json')
+            ->withStatus(200);
+    });
 };
