@@ -37,7 +37,7 @@ return function(Slim\App $app){
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(400);
         }
-        $rajzfilm = Rajzfilm::getById($args['id']);
+        $rajzfilm = Rajzfilm::find($args['id']);
         if ($rajzfilm === null) {
             $ki = json_encode(['error' => 'Nincs ilyen ID-val rajzfilm']);
             $response->getBody()->write($ki);
@@ -45,7 +45,7 @@ return function(Slim\App $app){
                 ->withHeader('Content-type','application/json')
                 ->withStatus(404);
         }
-        $rajzfilm->torles();
+        $rajzfilm->delete();
         return $response
             ->withStatus(204);
     });
