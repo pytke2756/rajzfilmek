@@ -109,4 +109,20 @@ return function(Slim\App $app){
         return $response
             ->withHeader('Content-type','application/json');
     });
+
+    $app->post('/kategoriak',function(Request $request,Response $response){
+        $input=json_decode($request-> getBody(),true);
+        $kategoria=Kategoria::create($input);
+        
+        $kategoria->save();
+
+        $kimenet=$kategoria->toJson();
+
+        $response->getBody()->write($kimenet);
+        return $response
+            ->withStatus(201)
+            ->withHeader('Content-type','application/json');
+
+    });
+
 };
