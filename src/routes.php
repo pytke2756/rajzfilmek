@@ -16,11 +16,11 @@ return function(Slim\App $app){
 
     $app->post('/rajzfilmek',function(Request $request,Response $response){
         $input=json_decode($request-> getBody(),true);
-        $rajzfilm=new Rajzfilm();
-        $rajzfilm->setAttributes($input);
-        $rajzfilm->uj();
+        $rajzfilm=Rajzfilm::create($input);
+        
+        $rajzfilm->save();
 
-        $kimenet=json_encode($rajzfilm);
+        $kimenet=$rajzfilm->toJson();
 
         $response->getBody()->write($kimenet);
         return $response
