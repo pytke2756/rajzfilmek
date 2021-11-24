@@ -3,3 +3,5 @@ composer install ha nincs vendor
 composer require illuminate/database 
     ha hibával tér vissza a composer.lock file-t törölni majd újra futtatni
     https://github.com/illuminate/database
+
+https://laravel.com/docs/8.x/eloquent
