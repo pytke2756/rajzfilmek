@@ -5,8 +5,8 @@ use Petrik\Rajzfilmek\Rajzfilm;
 
 return function(Slim\App $app){
     $app->get('/rajzfilmek',function(Request $request,Response $response){
-        $rajzfilmek=Rajzfilm::osszes();
-        $kimenet=json_encode($rajzfilmek);
+        $rajzfilmek=Rajzfilm::all();
+        $kimenet= $rajzfilmek->toJson();
         
         $response->getBody()->write($kimenet);
         return $response
