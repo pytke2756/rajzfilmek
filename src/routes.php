@@ -122,7 +122,27 @@ return function(Slim\App $app){
         return $response
             ->withStatus(201)
             ->withHeader('Content-type','application/json');
+    });
 
+    $app->delete('/kategoriak/{id}', function(Request $request,Response $response, array $args){
+        if (!is_numeric($args['id']) || $args['id'] <= 0) {
+            $ki = json_encode(['error ' => 'Az ID pozitív egész szám kell legyen!']);
+            $response->getBody()->write($ki);
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
+        }
+        $kategoria = Kategoria::find($args['id']);
+        if ($kategoria === null) {
+            $ki = json_encode(['error' => 'Nincs ilyen ID-val rajzfilm']);
+            $response->getBody()->write($ki);
+            return $response
+                ->withHeader('Content-type','application/json')
+                ->withStatus(404);
+        }
+        $kategoria->delete();
+        return $response
+            ->withStatus(204);
     });
 
 };
